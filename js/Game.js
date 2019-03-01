@@ -47,13 +47,14 @@ class Game {
 	playYourTurn(playeruno, playerdos, gamefinished) {
 		if (gamefinished === false) {
 			if (this.activePlayer === this.players[0]) {
+				var lastColor = "FFA000";
 				/**  hovering the box: activating/deactivating the symbol in gray  */
 
 				$("li.box").hover(
 					function() {
 						var boxfilledcolor = $(this).css("background-color");
 						if (boxfilledcolor === "rgb(239, 239, 239)") {
-							$(this).css("background-image", "url(./img/o.svg)");
+							$(this).css("background-image", "url(./src/img/o.svg)");
 						}
 					},
 					function() {
@@ -70,25 +71,27 @@ class Game {
 				$("#player2").removeClass("active");
 
 				$(".nowplaying").remove();
-
-				if (gamefinished === false) {
-					$("h1").after(
-						'<div class="nowplaying"> Now playing: ' + playeruno + "</div>"
-					);
-				}
+				$("h1").after(
+					'<div class="nowplaying"> Now playing: ' + playeruno + "</div>"
+				);
 
 				/**   how do we manage the click   */
+
 				var self = this;
 				$("li.box").on("click", function() {
 					boxNumber = parseInt(this.id, 10) - 1;
-					$(this).css("background-color", "#ffa000");
-					$(this).css("background-image", "url(./img/o.svg");
 
-					/**
-					 * updating the Board object with the box identifying parameters that it is not available anymore
-					 */
+					if (
+						self.board.canClickInBox(boxNumber, playeruno, playerdos) &&
+						self.activePlayer.color === "FFA000"
+					) {
+						$(this).css("background-color", "#ffa000");
+						$(this).css("background-image", "url(./src/img/o.svg");
 
-					if (self.board.canClickInBox(boxNumber, playeruno, playerdos)) {
+						/**
+						 * updating the Board object with the box identifying parameters that it is not available anymore
+						 */
+
 						self.board.clickBox(
 							boxNumber,
 							self.activePlayer,
@@ -116,8 +119,8 @@ class Game {
 
 				$("#player2").addClass("active");
 				$("#player1").removeClass("active");
-				$(".nowplaying").remove();
 
+				$(".nowplaying").remove();
 				if (playerdos !== "the computer") {
 					if (gamefinished === false) {
 						$("h1").after(
@@ -131,7 +134,7 @@ class Game {
 						function() {
 							var boxfilledcolor = $(this).css("background-color");
 							if (boxfilledcolor === "rgb(239, 239, 239)") {
-								$(this).css("background-image", "url(./img/x.svg)");
+								$(this).css("background-image", "url(./src/img/x.svg)");
 							}
 						},
 						function() {
@@ -148,10 +151,11 @@ class Game {
 
 					$("li.box").click(function() {
 						boxNumber = parseInt(this.id, 10) - 1;
-						$(this).css("background-color", "#3688c3");
-						$(this).css("background-image", "url(./img/x.svg");
 
 						if (self.board.canClickInBox(boxNumber, playeruno, playerdos)) {
+							$(this).css("background-color", "#3688c3");
+							$(this).css("background-image", "url(./src/img/x.svg");
+
 							self.board.clickBox(
 								boxNumber,
 								self.activePlayer,
@@ -196,15 +200,18 @@ class Game {
 						for (var j = 0; j < 9; j++) {
 							if (j === boxNumber) {
 								var aux1 = "#" + (j + 1);
-								$(aux1).css("background-color", "#3688c3");
-								$(aux1).css("background-image", "url(./img/x.svg)");
-								self.board.clickBox(
-									boxNumber,
-									self.activePlayer,
-									playeruno,
-									playerdos,
-									gamefinished
-								);
+								if (self.board.canClickInBox(boxNumber, playeruno, playerdos)) {
+									$(aux1).css("background-color", "#3688c3");
+									$(aux1).css("background-image", "url(./src/img/x.svg)");
+
+									self.board.clickBox(
+										boxNumber,
+										self.activePlayer,
+										playeruno,
+										playerdos,
+										gamefinished
+									);
+								}
 							}
 						}
 

@@ -35,9 +35,7 @@ class Board {
 			game.startGame(playeruno, playerdos);
 		});
 	}
-	/**
-	 *1. is the click box already marked
-	 */
+	/**  1. is the click box already marked   */
 
 	canClickInBox(boxNumber, playeruno, playerdos) {
 		if (this.board[boxNumber] === "grey") {
@@ -47,9 +45,7 @@ class Board {
 		}
 	}
 
-	/**
-	 *2. click the box and update the Board status
-	 */
+	/**   2. click the box and update the Board status   */
 
 	clickBox(
 		boxNumber,

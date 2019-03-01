@@ -22,8 +22,6 @@ $("div").addClass("screen screen-start");
 $("#board").attr("id", "start");
 $("h1").after('<button class="button" type="button">Start game</button>');
 
-/**   $("#playertype").show();   */
-
 $("button").before("<form></form>");
 $("form").attr("id", "playertime");
 $("form").append(
@@ -32,9 +30,7 @@ $("form").append(
 $("form").append(
 	'<input type="radio" name="vscomputer" value="false">Versus someone<br>'
 );
-/**
-var newboard = new Board();
-*/
+
 var playeruno = "";
 var playerdos = "human";
 
